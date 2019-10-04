@@ -6,7 +6,7 @@
  * @flow
  */
 
-import React from 'react';
+import React, {useState} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -23,13 +23,25 @@ import {
   DebugInstructions,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import Dropdown from './src/Dropdown';
+
+const availabilityList = [
+  {value: '0', label: 'Today'},
+  {value: '1', label: 'Tomorrow'},
+  {value: '7', label: 'Next 7 days'},
+  {value: '30', label: 'Next 1 month'},
+  {value: '90', label: 'Next 3 months'},
+  {value: '180', label: 'Next 6 months'},
+  {value: '365', label: 'Next 1 year'},
+];
 
 const App: () => React$Node = () => {
+  const [availability, setAvailability] = useState('0');
   return (
     <>
       <StatusBar barStyle="dark-content" />
       <SafeAreaView>
-        <ScrollView
+        {/* <ScrollView
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}>
           <Header />
@@ -66,7 +78,14 @@ const App: () => React$Node = () => {
             </View>
             <LearnMoreLinks />
           </View>
-        </ScrollView>
+        </ScrollView> */}
+        <Dropdown
+          label="Availability"
+          value={availability}
+          data={availabilityList}
+          onPressItem={value => setAvailability(value)}
+          containerStyle={styles.dropdownButton}
+        />
       </SafeAreaView>
     </>
   );
@@ -108,6 +127,9 @@ const styles = StyleSheet.create({
     padding: 4,
     paddingRight: 12,
     textAlign: 'right',
+  },
+  dropdownButton: {
+    marginVertical: 15,
   },
 });
 
